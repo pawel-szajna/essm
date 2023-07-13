@@ -10,6 +10,7 @@ target_link_libraries(
     SimpleService
     PRIVATE
         essm::logger  # The logging library, not needed, but useful
+        essm::events  # The library providing events generation
         essm::service # The library providing service implementations
 )
 

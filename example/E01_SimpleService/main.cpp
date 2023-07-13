@@ -14,6 +14,11 @@
 
 #include <essm/service/MessageService.hpp>
 
+//~ While any type can act as an event, as long as it has the required traits,
+//~ there are macros to generate those traits automatically.
+
+#include <essm/events/Event.hpp>
+
 //~ We'll also make use of the included logger interface. It can be configured
 //~ in various ways, but the default configuration should be enough to begin with.
 
