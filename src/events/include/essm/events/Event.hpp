@@ -1,11 +1,11 @@
 #pragma once
 
+#include <essm/events/EventTraits.hpp>
+
 #include <string_view>
 
 namespace essm
 {
-template<typename> struct EventTraits{};
-
 namespace detail
 {
 constexpr uint32_t crc32[]

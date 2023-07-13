@@ -1,12 +1,11 @@
 #pragma once
 
-#include <essm/events/Event.hpp>
+#include <essm/events/EventTraits.hpp>
+#include <essm/logger/Logger.hpp>
 #include <essm/types/ProcessingStatus.hpp>
 
 #include <functional>
 #include <unordered_map>
-
-#include <essm/logger/Logger.hpp>
 
 namespace essm
 {
@@ -19,6 +18,10 @@ public:
     ProcessingStatus handle(const MessageType& message)
     try
     {
+        essm_logger_debug("ESSMservice",
+                          "Received event {} ({:#x})",
+                          EventTraits<MessageType>::eventName,
+                          EventTraits<MessageType>::eventId);
         return handlers.at(EventTraits<MessageType>::eventId)((void*)(&message));
     }
     catch (std::out_of_range&)
@@ -35,6 +38,10 @@ protected:
     template<typename MessageType>
     void registerHandler(ProcessingStatus(ServiceImpl::*handler)(const MessageType&))
     {
+        essm_logger_debug("ESSMservice",
+                          "Registered event handler for {} ({:#x})",
+                          EventTraits<MessageType>::eventName,
+                          EventTraits<MessageType>::eventId);
         handlers.emplace(
                 EventTraits<MessageType>::eventId,
                 [this, handler] (void* message)
