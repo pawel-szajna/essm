@@ -14,6 +14,11 @@
 
 #include <essm/service/MessageService.hpp>
 
+//~ We'll also make use of the included logger interface. It can be configured
+//~ in various ways, but the default configuration should be enough to begin with.
+
+#include <essm/logger/Logger.hpp>
+
 //~ First of all, we need to define our events. Those can be, in fact, almost
 //~ anything, as long as the proper event traits are defined. The most important
 //~ event trait is its identifier, which has to be unique. The macro `essm_event`
@@ -73,7 +78,7 @@ public:
 
     ProcessingStatus handleReport(const Report&)
     {
-        std::cout << "Current value: " << amount << std::endl;
+        essm_info("Current value: {}", amount);
         return ProcessingStatus::Success;
     }
 

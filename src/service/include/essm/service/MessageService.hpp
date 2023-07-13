@@ -6,6 +6,8 @@
 #include <functional>
 #include <unordered_map>
 
+#include <essm/logger/Logger.hpp>
+
 namespace essm
 {
 template<typename ServiceImpl>
@@ -21,8 +23,10 @@ public:
     }
     catch (std::out_of_range&)
     {
-        std::cerr << "Service does not offer a handler for message #" << EventTraits<MessageType>::eventId
-                  << ": " << EventTraits<MessageType>::eventName << std::endl;
+        essm_logger_error("ESSMservice",
+                          "Service does not offer a handler for message {} (UID {})",
+                          EventTraits<MessageType>::eventName,
+                          EventTraits<MessageType>::eventId);
         return ProcessingStatus::Failure;
     }
 

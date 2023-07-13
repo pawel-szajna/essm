@@ -9,5 +9,12 @@ set_target_properties(
 target_link_libraries(
     SimpleService
     PRIVATE
-        essm::service
+        essm::logger  # The logging library, not needed, but useful
+        essm::service # The library providing service implementations
+)
+
+target_compile_definitions(
+    SimpleService
+    PRIVATE
+        ESSM_LOGGER_BACKEND_FMT
 )

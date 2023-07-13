@@ -28,4 +28,5 @@ target_link_libraries(
     INTERFACE
         essm::types
         essm::events
+        essm::logger
 )
