@@ -1,18 +1,18 @@
 add_executable(
-    Subservice
+    E02_Subservice
         services/Bank.cpp
         services/Payment.cpp
         main.cpp
 )
 
 set_target_properties(
-    Subservice
+    E02_Subservice
     PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/examples"
 )
 
 target_link_libraries(
-    Subservice
+    E02_Subservice
     PRIVATE
         essm::logger
         essm::events
@@ -20,7 +20,7 @@ target_link_libraries(
 )
 
 target_compile_definitions(
-    Subservice
+    E02_Subservice
     PRIVATE
         ESSM_LOGGER_BACKEND_FMT
 )

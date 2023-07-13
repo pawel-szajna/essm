@@ -1,13 +1,13 @@
-add_executable(SimpleService main.cpp)
+add_executable(E01_SimpleService main.cpp)
 
 set_target_properties(
-    SimpleService
+    E01_SimpleService
     PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/examples"
 )
 
 target_link_libraries(
-    SimpleService
+    E01_SimpleService
     PRIVATE
         essm::logger  # The logging library, not needed, but useful
         essm::events  # The library providing events generation
@@ -15,7 +15,7 @@ target_link_libraries(
 )
 
 target_compile_definitions(
-    SimpleService
+    E01_SimpleService
     PRIVATE
         ESSM_LOGGER_BACKEND_FMT
 )
