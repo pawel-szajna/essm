@@ -9,7 +9,7 @@
 
 namespace essm
 {
-class MessageService
+class EventService
 {
 public:
 

@@ -2,7 +2,7 @@
 
 #include "../Events.hpp"
 
-#include <essm/service/MessageService.hpp>
+#include <essm/service/EventService.hpp>
 
 #include <string>
 #include <unordered_map>
@@ -15,7 +15,7 @@ public:
     virtual int getBalance(const std::string& client) const = 0;
 };
 
-class BankingService : public essm::MessageService, public IBank
+class BankingService : public essm::EventService, public IBank
 {
     using ProcessingStatus = essm::ProcessingStatus;
 

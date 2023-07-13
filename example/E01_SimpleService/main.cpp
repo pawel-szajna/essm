@@ -8,10 +8,10 @@
 
 #include <cassert>
 
-//~ The type `MessageService` is the basic service which is capable of just
-//~ handling some messages.
+//~ The type `EventService` is the basic service which is capable of just
+//~ handling incoming events.
 
-#include <essm/service/MessageService.hpp>
+#include <essm/service/EventService.hpp>
 
 //~ While any type can act as an event, as long as it has the required traits,
 //~ there are macros to generate those traits automatically.
@@ -43,9 +43,9 @@ essm_event(Invalid)
 {};
 
 //~ It is now time to define our service. It implements the previously included
-//~ `MessageService`:
+//~ `EventService`:
 
-class AccumulateService : public essm::MessageService
+class AccumulateService : public essm::EventService
 {
     using ProcessingStatus = essm::ProcessingStatus;
 
@@ -108,7 +108,7 @@ int main()
     auto service = AccumulateService{};
 
     //~ Now it is time to create and send some events and send them to our service.
-    //~ We'll use the `handle` method, supplied by the `MessageService`:
+    //~ We'll use the `handle` method, supplied by the `EventService`:
 
     service.handle(Increment{2});
     service.handle(Report{});
@@ -134,7 +134,7 @@ int main()
 //~ ## Results
 //~
 //~ This simple program just writes a simple output when the `Report` event is
-//~ processed and an error message from `MessageService`, when it cannot find
+//~ processed and an error message from `EventService`, when it cannot find
 //~ a handler for some event:
 //~
 //~ ```

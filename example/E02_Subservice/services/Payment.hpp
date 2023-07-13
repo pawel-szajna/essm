@@ -2,15 +2,15 @@
 
 #include "../Events.hpp"
 
-#include <essm/service/MessageService.hpp>
+#include <essm/service/EventService.hpp>
 
 #include <string>
 
 class BankingService;
 
-class PaymentService : public essm::MessageService
+class PaymentService : public essm::EventService
 {
-    using Bank = essm::MessageService;
+    using Bank = essm::EventService;
     using ProcessingStatus = essm::ProcessingStatus;
 
 public:
