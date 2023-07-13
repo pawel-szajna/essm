@@ -1,1 +1,2 @@
 add_subdirectory(E01_SimpleService)
+add_subdirectory(E02_Subservice)
