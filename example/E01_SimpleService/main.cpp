@@ -28,18 +28,18 @@
 //~ event trait is its identifier, which has to be unique. The macro `essm_event`
 //~ can be used to simplify the generation as follows:
 
-essm_event(1, Increment)
+essm_event(Increment)
 {
     int amount;
 };
 
-essm_event(2, Report)
+essm_event(Report)
 {};
 
 //~ Let us also define an event which will not be supported by the service
 //~ to demonstrate that the program can handle this gracefully.
 
-essm_event(3, Invalid)
+essm_event(Invalid)
 {};
 
 //~ It is now time to define our service. It implements the previously included
