@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+
+import sys
+from enum import Enum
+
+class State(Enum):
+    Code = 1
+    Markdown = 2
+
+state = State.Markdown
+
+for line in sys.stdin:
+    stripped = line.lstrip()
+    if stripped.startswith("//~"):
+        if state == State.Code:
+            print('```\n')
+            state = State.Markdown
+        print(stripped[4:].rstrip())
+    else:
+        if state == State.Markdown:
+            print('\n```c++')
+            state = State.Code
+        print(line.rstrip())
