@@ -1,11 +1,11 @@
 #pragma once
 
 #if defined(ESSM_LOGGER_BACKEND_STD)
-#    include <essm/logger/BackendStd.hpp>
+#    include <essm/logger/detail/BackendStd.hpp>
 #elif defined(ESSM_LOGGER_BACKEND_FMT)
-#    include <essm/logger/BackendFmt.hpp>
+#    include <essm/logger/detail/BackendFmt.hpp>
 #elif defined(ESSM_LOGGER_BACKEND_SPDLOG)
-#    include <essm/logger/BackendSpdlog.hpp>
+#    include <essm/logger/detail/BackendSpdlog.hpp>
 #else
 #    define essm_logger_debug(app, ...) (void)0
 #    define essm_logger_info(app, ...) (void)0
