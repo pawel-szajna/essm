@@ -24,7 +24,7 @@ public:
     catch (std::out_of_range&)
     {
         essm_logger_error("ESSMservice",
-                          "Service does not offer a handler for message {} (UID {})",
+                          "Service does not offer a handler for event {} ({:#x})",
                           EventTraits<MessageType>::eventName,
                           EventTraits<MessageType>::eventId);
         return ProcessingStatus::Failure;
