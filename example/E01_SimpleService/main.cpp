@@ -7,7 +7,6 @@
 //~ ## Implementation
 
 #include <cassert>
-#include <iostream>
 
 //~ The type `MessageService` is the basic service which is capable of just
 //~ handling some messages.
