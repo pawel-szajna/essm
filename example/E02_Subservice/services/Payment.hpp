@@ -8,9 +8,9 @@
 
 class BankingService;
 
-class PaymentService : public essm::MessageService<PaymentService>
+class PaymentService : public essm::MessageService
 {
-    using Bank = essm::MessageService<BankingService>;
+    using Bank = essm::MessageService;
     using ProcessingStatus = essm::ProcessingStatus;
 
 public:

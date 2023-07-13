@@ -15,7 +15,7 @@ public:
     virtual int getBalance(const std::string& client) const = 0;
 };
 
-class BankingService : public essm::MessageService<BankingService>, public IBank
+class BankingService : public essm::MessageService, public IBank
 {
     using ProcessingStatus = essm::ProcessingStatus;
 

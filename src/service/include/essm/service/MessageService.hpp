@@ -9,7 +9,6 @@
 
 namespace essm
 {
-template<typename ServiceImpl>
 class MessageService
 {
 public:
@@ -35,7 +34,7 @@ public:
 
 protected:
 
-    template<typename MessageType>
+    template<typename ServiceImpl, typename MessageType>
     void registerHandler(ProcessingStatus(ServiceImpl::*handler)(const MessageType&))
     {
         essm_logger_debug("ESSMservice",

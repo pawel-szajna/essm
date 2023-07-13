@@ -45,7 +45,7 @@ essm_event(Invalid)
 //~ It is now time to define our service. It implements the previously included
 //~ `MessageService`:
 
-class AccumulateService : public essm::MessageService<AccumulateService>
+class AccumulateService : public essm::MessageService
 {
     using ProcessingStatus = essm::ProcessingStatus;
 
