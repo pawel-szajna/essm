@@ -70,9 +70,8 @@ namespace essm::detail
     (                                                                                         \
         ::fmt::print(fheader, "{}", #level),                                                  \
         ::fmt::print("/"),                                                                    \
-        ::fmt::print(fmt::fg(::fmt::rgb(::essm::detail::hash_(#app) | 0x888888)), "{}", app), \
-        ::fmt::print("/"),                                                                    \
-        ::fmt::print(fmt::emphasis::bold, "{}#{} ", __essm_logger_filename, __LINE__),        \
+        ::fmt::print(fmt::fg(::fmt::rgb(::essm::detail::hash_(#app) | 0x888888)), "{} ", app),\
+        ::fmt::print(fmt::emphasis::bold, "[{}:{}] ", __essm_logger_filename, __LINE__),      \
         ::fmt::print(__VA_ARGS__),                                                            \
         ::fmt::print("\n")                                                                    \
     )
