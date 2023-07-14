@@ -19,16 +19,16 @@ public:
     {
         essm_logger_debug("ESSMservice",
                           "Received event {} ({:#x})",
-                          EventTraits<MessageType>::eventName,
-                          EventTraits<MessageType>::eventId);
-        return handlers.at(EventTraits<MessageType>::eventId)((void*)(&message));
+                          EventTraits<MessageType>::name,
+                          EventTraits<MessageType>::id);
+        return handlers.at(EventTraits<MessageType>::id)((void*)(&message));
     }
     catch (std::out_of_range&)
     {
         essm_logger_error("ESSMservice",
                           "Service does not offer a handler for event {} ({:#x})",
-                          EventTraits<MessageType>::eventName,
-                          EventTraits<MessageType>::eventId);
+                          EventTraits<MessageType>::name,
+                          EventTraits<MessageType>::id);
         return ProcessingStatus::Failure;
     }
 
@@ -39,10 +39,10 @@ protected:
     {
         essm_logger_debug("ESSMservice",
                           "Registered event handler for {} ({:#x})",
-                          EventTraits<MessageType>::eventName,
-                          EventTraits<MessageType>::eventId);
+                          EventTraits<MessageType>::name,
+                          EventTraits<MessageType>::id);
         handlers.emplace(
-                EventTraits<MessageType>::eventId,
+                EventTraits<MessageType>::id,
                 [this, handler] (void* message)
                 {
                     return (((ServiceImpl*)(this))->*handler)(*(MessageType*)(message));
