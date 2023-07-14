@@ -66,15 +66,15 @@ namespace essm::detail
     }
 }
 
-#define __essm_logger_command(app, level, fheader, ...)                                \
-    (                                                                                  \
-        ::fmt::print(fheader, "{}", #level),                                           \
-        ::fmt::print("/"),                                                             \
-        ::fmt::print(fmt::fg(::fmt::rgb(::essm::detail::hash_(#app))), "{}", app),     \
-        ::fmt::print("/"),                                                             \
-        ::fmt::print(fmt::emphasis::bold, "{}#{} ", __essm_logger_filename, __LINE__), \
-        ::fmt::print(__VA_ARGS__),                                                     \
-        ::fmt::print("\n")                                                             \
+#define __essm_logger_command(app, level, fheader, ...)                                       \
+    (                                                                                         \
+        ::fmt::print(fheader, "{}", #level),                                                  \
+        ::fmt::print("/"),                                                                    \
+        ::fmt::print(fmt::fg(::fmt::rgb(::essm::detail::hash_(#app) | 0x888888)), "{}", app), \
+        ::fmt::print("/"),                                                                    \
+        ::fmt::print(fmt::emphasis::bold, "{}#{} ", __essm_logger_filename, __LINE__),        \
+        ::fmt::print(__VA_ARGS__),                                                            \
+        ::fmt::print("\n")                                                                    \
     )
 
 #define __essm_logger_debug(app, ...) __essm_logger_command(app, DBG, fmt::fg(fmt::color::sea_green), __VA_ARGS__)
