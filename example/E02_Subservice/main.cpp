@@ -1,5 +1,7 @@
 #include <essm/logger/Logger.hpp>
 
+#include <memory>
+
 #include "services/Bank.hpp"
 #include "services/Payment.hpp"
 
