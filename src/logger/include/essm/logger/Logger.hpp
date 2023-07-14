@@ -7,17 +7,24 @@
 #elif defined(ESSM_LOGGER_BACKEND_SPDLOG)
 #    include <essm/logger/detail/BackendSpdlog.hpp>
 #else
-#    define essm_logger_debug(app, ...) (void)0
-#    define essm_logger_info(app, ...) (void)0
-#    define essm_logger_warn(app, ...) (void)0
-#    define essm_logger_error(app, ...) (void)0
+#    define __essm_logger_debug(app, ...) (void)0
+#    define __essm_logger_info(app, ...) (void)0
+#    define __essm_logger_warn(app, ...) (void)0
+#    define __essm_logger_error(app, ...) (void)0
 #endif
 
 #if not defined(essm_app_client)
 #    define essm_app_client "Application"
 #endif
 
-#define essm_debug(...) essm_logger_debug(essm_app_client, __VA_ARGS__)
-#define essm_info(...) essm_logger_info(essm_app_client, __VA_ARGS__)
-#define essm_warn(...) essm_logger_warn(essm_app_client, __VA_ARGS__)
-#define essm_error(...) essm_logger_error(essm_app_client, __VA_ARGS__)
+/// @brief Write a debug log using the default logger
+#define essm_debug(...) __essm_logger_debug(essm_app_client, __VA_ARGS__)
+
+/// @brief Write an info log using the default logger
+#define essm_info(...) __essm_logger_info(essm_app_client, __VA_ARGS__)
+
+/// @brief Write a warning log using the default logger
+#define essm_warn(...) __essm_logger_warn(essm_app_client, __VA_ARGS__)
+
+/// @brief Write an error log using the default logger
+#define essm_error(...) __essm_logger_error(essm_app_client, __VA_ARGS__)
