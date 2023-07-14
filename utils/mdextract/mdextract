@@ -21,3 +21,7 @@ for line in sys.stdin:
             print('\n```c++')
             state = State.Code
         print(line.rstrip())
+
+if state == State.Code:
+    print('```\n)
+
