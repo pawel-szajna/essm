@@ -1,10 +1,12 @@
 #pragma once
 
+#include <essm/types/Traits.hpp>
+
 namespace essm
 {
 template<typename> struct EventTraits
 {
-    static constexpr unsigned int id{};
-    static constexpr auto name{""};
+    static constexpr types::EventId id{};
+    static constexpr types::EventName name{""};
 };
 }

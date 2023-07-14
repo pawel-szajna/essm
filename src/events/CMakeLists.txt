@@ -14,3 +14,9 @@ target_include_directories(
     INTERFACE
         include
 )
+
+target_link_libraries(
+    essm_events
+    INTERFACE
+        essm::types
+)

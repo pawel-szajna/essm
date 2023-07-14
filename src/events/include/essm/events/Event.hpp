@@ -75,11 +75,11 @@ consteval uint32_t hash(::std::string_view input)
         ::essm::EventTraits<name_>
 #endif
 
-#define __essm_event_create_traits(id_, name_)        \
-    template<> struct __essm_event_traits_type(name_) \
-    {                                                 \
-        static constexpr unsigned int id = id_;       \
-        static constexpr auto name = #name_;          \
+#define __essm_event_create_traits(id_, name_)                 \
+    template<> struct __essm_event_traits_type(name_)          \
+    {                                                          \
+        static constexpr essm::types::EventId id = id_;        \
+        static constexpr essm::types::EventName name = #name_; \
     }
 
 /**

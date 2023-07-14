@@ -51,7 +51,7 @@ protected:
 
 private:
 
-    std::unordered_map<unsigned int, std::function<ProcessingStatus(void*)>> handlers{};
+    std::unordered_map<types::EventId, std::function<ProcessingStatus(void*)>> handlers{};
 
 };
 }

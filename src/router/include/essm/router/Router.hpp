@@ -65,7 +65,7 @@ public:
 
 private:
 
-    std::unordered_map<unsigned int, EventService*> services{};
+    std::unordered_map<types::EventId, EventService*> services{};
 
 };
 }
