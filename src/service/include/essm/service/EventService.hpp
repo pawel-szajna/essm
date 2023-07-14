@@ -13,6 +13,13 @@ class EventService
 {
 public:
 
+    /**
+     * Handle an incoming event in the service.
+     *
+     * @tparam MessageType Event type
+     * @param message Event
+     * @return Status of event handling
+     */
     template<typename MessageType>
     ProcessingStatus handle(const MessageType& message)
     try
@@ -34,6 +41,14 @@ public:
 
 protected:
 
+    /**
+     * Registers a handler for given event, where event is any type for which
+     * EventTraits are defined.
+     *
+     * @tparam ServiceImpl Type of service implementation class
+     * @tparam MessageType Type of event to handle
+     * @param handler Pointer to handler method
+     */
     template<typename ServiceImpl, typename MessageType>
     void registerHandler(ProcessingStatus(ServiceImpl::*handler)(const MessageType&))
     {
