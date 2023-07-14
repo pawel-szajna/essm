@@ -8,3 +8,4 @@ used.
 |-----|-------------------------------------|-----------------------------------------------------------------------|
 | 1   | [Simple service](E01_SimpleService) | A simple service implementation. Just handles some types of messages. |
 | 2   | [Subservice](E02_Subservice)        | Two simple interacting services.                                      |
+| 3   | [Routing](E03_Routing)              | Event router, delivering messages to services.                        |
