@@ -23,5 +23,5 @@ for line in sys.stdin:
         print(line.rstrip())
 
 if state == State.Code:
-    print('```\n)
+    print('```\n')
 
