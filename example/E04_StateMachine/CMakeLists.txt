@@ -3,6 +3,12 @@ add_executable(
         main.cpp
 )
 
+set_target_properties(
+    E04_StateMachine
+    PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/examples"
+)
+
 target_compile_definitions(
     E04_StateMachine
     PRIVATE
