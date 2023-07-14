@@ -7,8 +7,11 @@
 //~   received during this counting cycle. The event `Report` finishes the cycle and triggers a log message
 //~   with the counting result.
 
+#include <cassert>
+
 #include <essm/events/Event.hpp>
 #include <essm/state_machine/StateMachine.hpp>
+#include <essm/state_machine/State.hpp>
 
 //~ We define our events as usual:
 
@@ -18,20 +21,25 @@ essm_event(Report) {};
 
 //~ Then create the state machine:
 
+essm_state(Idle);
+essm_state(Counting);
+
 class Counter : public essm::StateMachine
 {
     using Status = essm::ProcessingStatus;
 
 public:
 
-    Counter()
+    //~ We pass the initial state to the `StateMachine`'s construction:
+
+    Counter() : StateMachine(Idle{})
     {
         //~ In the constructor, we create the transition table, describing all the possible states and
         //~ events which trigger transitions between them, and optional actions.
 
-        addTransition<Activate>(0, 1);
-        addTransition<Number>  (1, 1, &Counter::count);
-        addTransition<Report>  (1, 0, &Counter::report);
+        addTransition<Activate, Idle,     Counting>();
+        addTransition<Number,   Counting, Counting>(&Counter::count);
+        addTransition<Report,   Counting, Idle    >(&Counter::report);
 
         //~ Note: while the transitions with actions provided could determine the event types based on the
         //~ action handler parameter type, it is suggested to provide it explicitly for increased readability
@@ -70,13 +78,13 @@ int main()
 
     //~ The difference is that when we are in the wrong state, the action handlers will not be invoked:
 
-    counter.handle(Number{2});
-    counter.handle(Report{});
+    assert(counter.handle(Number{2}) == essm::ProcessingStatus::Failure);
+    assert(counter.handle(Report{}) == essm::ProcessingStatus::Failure);
 
-    counter.handle(Activate{});
-    counter.handle(Number{12});
-    counter.handle(Activate{});
-    counter.handle(Report{});
+    assert(counter.handle(Activate{}) == essm::ProcessingStatus::Success);
+    assert(counter.handle(Number{12}) == essm::ProcessingStatus::Success);
+    assert(counter.handle(Activate{}) == essm::ProcessingStatus::Failure);
+    assert(counter.handle(Report{}) == essm::ProcessingStatus::Success);
 
     //~ That's all!
 

@@ -9,8 +9,11 @@ In this example, we will create a very simple `Counter` state machine, which onl
 
 ```c++
 
+#include <cassert>
+
 #include <essm/events/Event.hpp>
 #include <essm/state_machine/StateMachine.hpp>
+#include <essm/state_machine/State.hpp>
 
 ```
 
@@ -28,13 +31,22 @@ Then create the state machine:
 
 ```c++
 
+essm_state(Idle);
+essm_state(Counting);
+
 class Counter : public essm::StateMachine
 {
     using Status = essm::ProcessingStatus;
 
 public:
 
-    Counter()
+```
+
+We pass the initial state to the `StateMachine`'s construction:
+
+```c++
+
+    Counter() : StateMachine(Idle{})
     {
 ```
 
@@ -43,9 +55,9 @@ events which trigger transitions between them, and optional actions.
 
 ```c++
 
-        addTransition<Activate>(0, 1);
-        addTransition<Number>  (1, 1, &Counter::count);
-        addTransition<Report>  (1, 0, &Counter::report);
+        addTransition<Activate, Idle,     Counting>();
+        addTransition<Number,   Counting, Counting>(&Counter::count);
+        addTransition<Report,   Counting, Idle    >(&Counter::report);
 
 ```
 
@@ -96,13 +108,13 @@ The difference is that when we are in the wrong state, the action handlers will 
 
 ```c++
 
-    counter.handle(Number{2});
-    counter.handle(Report{});
+    assert(counter.handle(Number{2}) == essm::ProcessingStatus::Failure);
+    assert(counter.handle(Report{}) == essm::ProcessingStatus::Failure);
 
-    counter.handle(Activate{});
-    counter.handle(Number{12});
-    counter.handle(Activate{});
-    counter.handle(Report{});
+    assert(counter.handle(Activate{}) == essm::ProcessingStatus::Success);
+    assert(counter.handle(Number{12}) == essm::ProcessingStatus::Success);
+    assert(counter.handle(Activate{}) == essm::ProcessingStatus::Failure);
+    assert(counter.handle(Report{}) == essm::ProcessingStatus::Success);
 
 ```
 

@@ -4,6 +4,7 @@
 #include <essm/types/Traits.hpp>
 #include <essm/logger/Logger.hpp>
 #include <essm/service/EventService.hpp>
+#include <essm/state_machine/StateTraits.hpp>
 
 #include <optional>
 #include <vector>
@@ -24,31 +25,41 @@ class StateMachine : public EventService
 
 protected:
 
-    template<typename Event>
-    void addTransition(types::StateId state, types::StateId target)
+    template<typename InitialState>
+    explicit StateMachine(const InitialState&)
+        : state{StateTraits<InitialState>::id}
+    {}
+
+    template<typename Event, typename SourceState, typename TargetState>
+    void addTransition()
     {
-        addTransition<Event>(state, target, std::nullopt);
+        saveTransition<Event, SourceState, TargetState>(std::nullopt);
     }
 
-    template<typename Event, typename ServiceImpl>
-    void addTransition(types::StateId state,
-                       types::StateId target,
-                       ProcessingStatus(ServiceImpl::*handler)(const Event&))
+    template<typename Event, typename SourceState, typename TargetState, typename ServiceImpl>
+    void addTransition(ProcessingStatus(ServiceImpl::*handler)(const Event&))
     {
-        addTransition<Event>(state, target,
-                             Transition::Action{[this, handler](void* event) {
-                                 return (((ServiceImpl*)(this))->*handler)(*(Event*)(event));
-                             }});
+        saveTransition<Event, SourceState, TargetState>(
+            Transition::Action{[this, handler](void* event) {
+                return (((ServiceImpl*)(this))->*handler)(*(Event*)(event));
+            }});
     }
 
 private:
 
-    template<typename Event>
-    void addTransition(types::StateId state, types::StateId target, Transition::Action action)
+    template<typename Event, typename SourceState, typename TargetState>
+    void saveTransition(Transition::Action action)
     {
-        __essm_logger_debug("ESSMfsm", "Registering transition {} -> {} on {}", state, target, EventTraits<Event>::name);
+        __essm_logger_debug("ESSMfsm",
+                            "Registering transition {} -> {} on {}",
+                            StateTraits<SourceState>::name,
+                            StateTraits<TargetState>::name,
+                            EventTraits<Event>::name);
         registerHandler<StateMachine, Event>(&StateMachine::forward);
-        transitions.emplace_back(Transition{state, EventTraits<Event>::id, target, std::move(action)});
+        transitions.emplace_back(Transition{StateTraits<SourceState>::id,
+                                            EventTraits<Event>::id,
+                                            StateTraits<TargetState>::id,
+                                            std::move(action)});
     }
 
     template<typename Event>
@@ -74,7 +85,7 @@ private:
             result = (*transition->action)((void*)(&event));
         }
         state = transition->target;
-        __essm_logger_debug("ESSMfsm", "Processing finished, current state is {}", state);
+        __essm_logger_debug("ESSMfsm", "Processing finished, current state is {:#x}", state);
         return result;
     }
 
