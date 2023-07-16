@@ -21,6 +21,12 @@ elseif(ESSM_LOGGER_BACKEND STREQUAL "spdlog")
     target_link_libraries(essm_logger INTERFACE spdlog)
 endif()
 
+target_link_libraries(
+    essm_logger
+    INTERFACE
+        essm::helpers
+)
+
 target_include_directories(
     essm_logger
     INTERFACE
