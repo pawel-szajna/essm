@@ -1,10 +1,10 @@
 #pragma once
 
-#include <essm/types/ProcessingStatus.hpp>
-#include <essm/types/Traits.hpp>
 #include <essm/logger/Logger.hpp>
 #include <essm/service/EventService.hpp>
 #include <essm/state_machine/StateTraits.hpp>
+#include <essm/types/ProcessingStatus.hpp>
+#include <essm/types/Traits.hpp>
 
 #include <optional>
 #include <vector>
@@ -28,7 +28,8 @@ protected:
     template<typename InitialState>
     explicit StateMachine(const InitialState&)
         : state{StateTraits<InitialState>::id}
-    {}
+    {
+    }
 
     template<typename Event, typename SourceState, typename TargetState>
     void addTransition()
@@ -37,12 +38,10 @@ protected:
     }
 
     template<typename Event, typename SourceState, typename TargetState, typename ServiceImpl>
-    void addTransition(ProcessingStatus(ServiceImpl::*handler)(const Event&))
+    void addTransition(ProcessingStatus (ServiceImpl::*handler)(const Event&))
     {
-        saveTransition<Event, SourceState, TargetState>(
-            Transition::Action{[this, handler](void* event) {
-                return (((ServiceImpl*)(this))->*handler)(*(Event*)(event));
-            }});
+        saveTransition<Event, SourceState, TargetState>(Transition::Action{
+            [this, handler](void* event) { return (((ServiceImpl*)(this))->*handler)(*(Event*)(event)); }});
     }
 
 private:
@@ -68,9 +67,7 @@ private:
         auto transition = std::find_if(transitions.begin(),
                                        transitions.end(),
                                        [state = this->state](const Transition& t)
-                                       {
-                                           return t.state == state and t.event == EventTraits<Event>::id;
-                                       });
+                                       { return t.state == state and t.event == EventTraits<Event>::id; });
         if (transition == transitions.end())
         {
             __essm_logger_warn("ESSMfsm",
@@ -91,6 +88,5 @@ private:
 
     types::StateId state{};
     std::vector<Transition> transitions{};
-
 };
-}
+} // namespace essm

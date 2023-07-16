@@ -4,9 +4,10 @@
 
 namespace essm
 {
-    template<typename> struct StateTraits
-    {
-        static constexpr types::StateId id{};
-        static constexpr types::StateName name{""};
-    };
-}
+template<typename>
+struct StateTraits
+{
+    constexpr static types::StateId id{};
+    constexpr static types::StateName name{""};
+};
+} // namespace essm

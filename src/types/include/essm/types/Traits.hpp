@@ -4,9 +4,9 @@
 
 namespace essm::types
 {
-using EventId = std::uint32_t;
+using EventId   = std::uint32_t;
 using EventName = const char*;
 
-using StateId = std::uint32_t;
+using StateId   = std::uint32_t;
 using StateName = const char*;
-}
+} // namespace essm::types

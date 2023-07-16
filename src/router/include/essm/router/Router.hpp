@@ -1,9 +1,9 @@
 #pragma once
 
-#include <essm/types/ProcessingStatus.hpp>
 #include <essm/events/EventTraits.hpp>
-#include <essm/service/EventService.hpp>
 #include <essm/logger/Logger.hpp>
+#include <essm/service/EventService.hpp>
+#include <essm/types/ProcessingStatus.hpp>
 
 #include <unordered_map>
 
@@ -11,7 +11,6 @@ namespace essm
 {
 class Router
 {
-
 public:
 
     /**
@@ -66,6 +65,5 @@ public:
 private:
 
     std::unordered_map<types::EventId, EventService*> services{};
-
 };
-}
+} // namespace essm

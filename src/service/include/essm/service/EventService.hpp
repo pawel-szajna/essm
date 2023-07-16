@@ -50,23 +50,19 @@ protected:
      * @param handler Pointer to handler method
      */
     template<typename ServiceImpl, typename MessageType>
-    void registerHandler(ProcessingStatus(ServiceImpl::*handler)(const MessageType&))
+    void registerHandler(ProcessingStatus (ServiceImpl::*handler)(const MessageType&))
     {
         __essm_logger_debug("ESSMservice",
                             "Registered event handler for {} ({:#x})",
                             EventTraits<MessageType>::name,
                             EventTraits<MessageType>::id);
-        handlers.emplace(
-                EventTraits<MessageType>::id,
-                [this, handler] (void* message)
-                {
-                    return (((ServiceImpl*)(this))->*handler)(*(MessageType*)(message));
-                });
+        handlers.emplace(EventTraits<MessageType>::id,
+                         [this, handler](void* message)
+                         { return (((ServiceImpl*)(this))->*handler)(*(MessageType*)(message)); });
     }
 
 private:
 
     std::unordered_map<types::EventId, std::function<ProcessingStatus(void*)>> handlers{};
-
 };
-}
+} // namespace essm

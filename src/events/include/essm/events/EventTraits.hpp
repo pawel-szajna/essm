@@ -4,9 +4,10 @@
 
 namespace essm
 {
-template<typename> struct EventTraits
+template<typename>
+struct EventTraits
 {
-    static constexpr types::EventId id{};
-    static constexpr types::EventName name{""};
+    constexpr static types::EventId id{};
+    constexpr static types::EventName name{""};
 };
-}
+} // namespace essm
