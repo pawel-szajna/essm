@@ -14,7 +14,11 @@
 #endif
 
 #if not defined(essm_app_client)
-    #define essm_app_client "Application"
+    #if defined(ESSM_LOGGER_DEFAULT_NAME)
+        #define essm_app_client ESSM_LOGGER_DEFAULT_NAME
+    #else
+        #define essm_app_client "Application"
+    #endif
 #endif
 
 /// @brief Write a debug log using the default logger
