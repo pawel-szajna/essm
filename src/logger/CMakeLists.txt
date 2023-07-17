@@ -1,12 +1,8 @@
-add_library(
-    essm_logger
-    INTERFACE
-)
-
-add_library(
-    essm::logger
-    ALIAS
-        essm_logger
+add_essm_library(
+    NAME logger
+    TYPE INTERFACE
+    DEPENDENCIES
+        essm::helpers
 )
 
 if(ESSM_LOGGER_BACKEND STREQUAL "fmt")
@@ -25,15 +21,3 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug" OR
    CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
     add_compile_definitions(ESSM_LOGGER_ENABLE_DEBUG)
 endif()
-
-target_link_libraries(
-    essm_logger
-    INTERFACE
-        essm::helpers
-)
-
-target_include_directories(
-    essm_logger
-    INTERFACE
-        include
-)
