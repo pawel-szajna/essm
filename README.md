@@ -2,4 +2,6 @@
 
 The library is currently in a quite unstable state.
 
-Please refer to the [examples](example) to check how to use it.
+Some [modules](src) offer information in their README files.  
+
+Please refer to the [examples](example) to check how to use the library.
