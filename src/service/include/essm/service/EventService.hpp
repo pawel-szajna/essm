@@ -5,6 +5,7 @@
 #include <essm/types/ProcessingStatus.hpp>
 
 #include <functional>
+#include <stdexcept>
 #include <unordered_map>
 
 namespace essm
