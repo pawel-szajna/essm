@@ -8,8 +8,8 @@
 #define __essm_logger_command(app, level, fheader, ...)                                                                \
     (::fmt::print(fheader, "{}", #level),                                                                              \
      ::fmt::print("/"),                                                                                                \
-     ::fmt::print(fmt::fg(::fmt::rgb(::essm::helpers::hash(#app) | 0x88'88'88)), "{} ", app),                          \
-     ::fmt::print(fmt::emphasis::bold, "[{}:{}] ", __essm_logger_filename, __LINE__),                                  \
+     ::fmt::print(fmt::fg(::fmt::rgb(::essm::helpers::hash(#app) | 0x88'88'88)), app),                                 \
+     ::fmt::print(fmt::emphasis::bold, " [{}:{}] ", __essm_logger_filename, __LINE__),                                 \
      ::fmt::print(__VA_ARGS__),                                                                                        \
      ::fmt::print("\n"))
 
