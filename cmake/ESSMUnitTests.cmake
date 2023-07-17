@@ -31,10 +31,14 @@ function(add_essm_ut)
             RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/ut"
     )
 
-    add_test(
-        NAME ${UT_TESTS_MODULE}
-        COMMAND ${UT_TESTS_MODULE}
+    target_compile_definitions(
+        ${UT_TESTS_MODULE}
+        PRIVATE
+            ESSM_LOGGER_BACKEND_FMT
+            ESSM_LOGGER_ENABLE_DEBUG
     )
+
+    gtest_discover_tests(${UT_TESTS_MODULE})
 
     target_include_directories(
         ${UT_TESTS_MODULE}
@@ -46,6 +50,7 @@ function(add_essm_ut)
         ${UT_TESTS_MODULE}
         PRIVATE
             essm::${UT_TESTED_LIBRARY}
+            fmt
             gmock
             gtest_main
     )

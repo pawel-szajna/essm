@@ -21,7 +21,7 @@ jobs:
         run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
       - name: Test
         working-directory: ${{github.workspace}}/build
-        run: ctest -C {{$env.BUILD_TYPE}}
+        run: for TEST in ${{github.workspace}}/build/bin/ut/ut_*; do $TEST; done
   static-checks:
     runs-on: ubuntu-latest
     steps:
