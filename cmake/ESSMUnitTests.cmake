@@ -1,8 +1,8 @@
 function(essm_acquire_google_test)
     include(FetchContent)
     FetchContent_Declare(
-            googletest
-            URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+        googletest
+        URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
     )
     FetchContent_MakeAvailable(googletest)
     enable_testing()
@@ -46,6 +46,7 @@ function(add_essm_ut)
         ${UT_TESTS_MODULE}
         PRIVATE
             essm::${UT_TESTED_LIBRARY}
-            GTest::gtest_main
+            gmock
+            gtest_main
     )
 endfunction()
