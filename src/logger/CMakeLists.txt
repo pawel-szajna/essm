@@ -21,6 +21,11 @@ elseif(ESSM_LOGGER_BACKEND STREQUAL "spdlog")
     target_link_libraries(essm_logger INTERFACE spdlog)
 endif()
 
+if(CMAKE_BUILD_TYPE STREQUAL "Debug" OR
+   CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
+    add_compile_definitions(ESSM_LOGGER_ENABLE_DEBUG)
+endif()
+
 target_link_libraries(
     essm_logger
     INTERFACE

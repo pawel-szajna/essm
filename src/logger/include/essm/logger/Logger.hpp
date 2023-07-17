@@ -18,7 +18,11 @@
 #endif
 
 /// @brief Write a debug log using the default logger
-#define essm_debug(...) __essm_logger_debug(essm_app_client, __VA_ARGS__)
+#if defined(ESSM_LOGGER_ENABLE_DEBUG)
+    #define essm_debug(...) __essm_logger_debug(essm_app_client, __VA_ARGS__)
+#else
+    #define essm_debug(...) (void)0
+#endif
 
 /// @brief Write an info log using the default logger
 #define essm_info(...) __essm_logger_info(essm_app_client, __VA_ARGS__)
